@@ -1,0 +1,43 @@
+---
+- name: Enable Nextcloud Update
+  set_fact:
+    nextcloud_update: 1
+  when: nextcloud_update_enable
+
+- name: Set Container Volumes
+  set_fact:
+    nextcloud_container_volumes:
+      - "{{ nextcloud_main_volume_name }}:/var/www/html"
+      - "{{ nextcloud_apps_volume_name }}:/var/www/html/custom_apps"
+      - "{{ nextcloud_config_volume_name }}:/var/www/html/config"
+      - "{{ nextcloud_data_volume_name }}:/var/www/html/data"
+
+- name: Set Environment variables
+  set_fact:
+    nextcloud_envs:
+      MYSQL_HOST: "{{ nextcloud_db_host | default('localhost') }}"
+      MYSQL_USER: "{{ nextcloud_db_user | default('nextcloud') }}"
+      MYSQL_PASSWORD: "{{ nextcloud_db_password | default('nextcloud') }}"
+      MYSQL_DATABASE: "{{ nextcloud_db_name | default('nextcloud') }}"
+      NEXTCLOUD_ADMIN_USER: "{{ nextcloud_admin_user | default('admin') }}"
+      NEXTCLOUD_ADMIN_PASSWORD: "{{ nextcloud_admin_password | default('password') }}"
+      NEXTCLOUD_TRUSTED_DOMAINS: "{% for domain in nextcloud_trusted_domains %}{{ domain }}{{ ' ' if not loop.last else '' }}{% endfor %}"
+      NEXTCLOUD_UPDATE: "{{ nextcloud_update | default('0') }}"
+
+- name: Set SMTP Environment variables if SMTP is configured
+  set_fact:
+    nextcloud_smtp_envs:
+      SMTP_HOST: "{{ nextcloud_smtp_host }}"
+      SMTP_SECURE: "{{ nextcloud_smtp_secure | default('') }}"
+      SMTP_PORT: "{{ nextcloud_smtp_port | default('25') }}"
+      SMTP_AUTHTYPE: "{{ nextcloud_smtp_authtype | upper | default('PLAIN') }}"
+      SMTP_NAME: "{{ nextcloud_smtp_user | default('') }}"
+      SMTP_PASSWORD: "{{ nextcloud_smtp_password | default('') }}"
+      SMTP_FROM_ADDRESS: "{{ nextcloud_mail_from_address | default('') }}"
+      MAIL_DOMAIN: "{{ nextcloud_mail_domain | default('') }}"
+  when: nextcloud_smtp_host is defined and nextcloud_smtp_host != None and nextcloud_smtp_host != ''
+
+- name: Add SMTP Environment variables
+  set_fact:
+    nextcloud_envs: "{{ nextcloud_envs | combine(nextcloud_smtp_envs) }}"
+  when: nextcloud_smtp_envs is defined and nextcloud_smtp_envs | length > 0

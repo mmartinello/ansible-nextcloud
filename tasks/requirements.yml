@@ -6,5 +6,7 @@
 
 - name: Install required PIP packages
   pip:
-    name: PyMySQL
+    name:
+      - PyMySQL
+      - docker
     state: present

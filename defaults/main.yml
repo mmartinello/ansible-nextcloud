@@ -8,3 +8,42 @@ nextcloud_db_password: nextcloud
 nextcloud_db_user_host: '%'
 nextcloud_db_user_privileges: 'SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,CREATE VIEW,INDEX,EXECUTE'
 nextcloud_db_config_encrypt_enable: false
+
+# Docker image settings
+nextcloud_image_name: nextcloud
+nextcloud_image_tag: latest
+nextcloud_image_update: false
+
+# Docker container settings
+nextcloud_container_name: nextcloud
+nextcloud_host_port: 8080
+nextcloud_container_start: true
+nextcloud_restart_policy: always
+
+# Docker volumes settings
+nextcloud_main_volume_name: nextcloud
+nextcloud_apps_volume_name: nextcloud_apps
+nextcloud_config_volume_name: nextcloud_config
+nextcloud_data_volume_name: nextcloud_data
+
+# Admin account
+nextcloud_admin_user: admin
+nextcloud_admin_password: password
+
+# Trusted domains
+nextcloud_trusted_domains:
+  - localhost
+  - 127.0.0.1
+
+# Enable update
+nextcloud_update_enable: false
+
+# SMTP Configuration
+nextcloud_smtp_host: # SMTP Host
+nextcloud_smtp_secure: # Empty, ssl (use SSL), tls (use STARTTLS)
+nextcloud_smtp_port: # SMTP Port
+nextcloud_smtp_authtype: # plain (no authentication enabled), login (authentication enabled)
+nextcloud_smtp_user: # Auth user
+nextcloud_smtp_password: # Auth password
+nextcloud_mail_from_address: # From mail address
+nextcloud_mail_domain: # From mail domain

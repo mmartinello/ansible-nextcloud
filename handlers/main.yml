@@ -1,2 +1,7 @@
 ---
-# handlers file for mmartinello.nextcloud
+- name: Restart Nextcloud
+  docker_container:
+    name: "{{ nextcloud_container_name }}"
+    state: started
+    restart: yes
+  when: nextcloud_container_start == true
