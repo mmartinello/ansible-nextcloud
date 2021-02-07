@@ -1,2 +1,10 @@
 ---
-# defaults file for mmartinello.nextcloud
+# Database settings
+nextcloud_db_host: localhost
+nextcloud_db_port: 3306
+nextcloud_db_user: nextcloud
+nextcloud_db_name: nextcloud
+nextcloud_db_password: nextcloud
+nextcloud_db_user_host: '%'
+nextcloud_db_user_privileges: 'SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,CREATE VIEW,INDEX,EXECUTE'
+nextcloud_db_config_encrypt_enable: false

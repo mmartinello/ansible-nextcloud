@@ -1,2 +1,4 @@
 ---
-# tasks file for mmartinello.nextcloud
+- import_tasks: requirements.yml
+
+- import_tasks: database.yml
